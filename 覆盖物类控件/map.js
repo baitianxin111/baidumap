@@ -33,6 +33,33 @@
 		 
 		var marker = new BMap.Marker(event.point);
 		 self.map.addOverlay(marker);
+		 var coder = new BMap.Geocoder();
+		 //对指定的地址进行解析。
+//		 如果解析成功，则回调函数的参数为GeocoderResult对象，否则回调函数的参数为nul
+		 coder.getPoint( "广州塔",  function(result){
+		 	console.log(result);	 
+		 });
+		 			 		
+		 	//对指定的坐标点进行反地址解析
+		 	coder.getLocation(event.point,function(result){		 	
+		 	console.log(result);	
+		 	var message = "<div><img width='20' src='1.PNG'/><p>"+result.address+"</p><a href='http://www.baidu.com'>点击我</a></div>";
+		 	//创建信息窗口
+		 	var infoWindow = new BMap.InfoWindow(message,{
+		 		//设置弹出框的位置
+		 		offset:new BMap.Size( 0,-20)
+		 	});	
+		 	//显示出弹框
+		 	self.map.openInfoWindow(infoWindow, event.point);
+		 	//当单击位置图标时时关闭地理信息弹框
+		 	marker.addEventListener('click',function(){
+		 		if (infoWindow.isOpen()) {
+		 			self.map.closeInfoWindow();
+		 		} else{
+		 			self.map.openInfoWindow(infoWindow,event.point);
+		 		}
+		 	});
+		 });
 	}
 		this.map.addEventListener('dblclick', this.addMarker)
 	};

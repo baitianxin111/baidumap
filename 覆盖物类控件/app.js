@@ -3,6 +3,7 @@
 		var map = new Map("map");
 //	map.addControl(new NavigationControl());
 	var markerControl = document.querySelector('.addMarker');
+//	map.enableScrollWheelZoom();
 	markerControl.onclick = function(){
 		if (this.textContent == "开启双击添加Marker") {
 			map.startAddMarker();
